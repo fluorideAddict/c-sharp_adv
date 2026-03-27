@@ -1,0 +1,64 @@
+@page
+@model SenseHatDashboard.Pages.IndexModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SenseHat Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
+<body>
+    <header>
+        <h1>SenseHat Dashboard</h1>
+        <span id="connection-status" class="status disconnected">Connecting…</span>
+    </header>
+
+    <main class="grid">
+        <div class="card" id="card-temperature">
+            <div class="label">Temperature</div>
+            <div class="value" id="val-temperature">—</div>
+            <div class="unit">°C</div>
+            <div class="sparkline" id="spark-temperature"></div>
+        </div>
+        <div class="card" id="card-humidity">
+            <div class="label">Humidity</div>
+            <div class="value" id="val-humidity">—</div>
+            <div class="unit">%RH</div>
+            <div class="sparkline" id="spark-humidity"></div>
+        </div>
+        <div class="card" id="card-pressure">
+            <div class="label">Pressure</div>
+            <div class="value" id="val-pressure">—</div>
+            <div class="unit">hPa</div>
+            <div class="sparkline" id="spark-pressure"></div>
+        </div>
+        <div class="card imu" id="card-orientation">
+            <div class="label">Orientation (IMU)</div>
+            <div class="imu-row">
+                <span class="imu-axis">Pitch</span>
+                <span class="value" id="val-pitch">—</span>
+                <span class="unit">°</span>
+            </div>
+            <div class="imu-row">
+                <span class="imu-axis">Roll</span>
+                <span class="value" id="val-roll">—</span>
+                <span class="unit">°</span>
+            </div>
+            <div class="imu-row">
+                <span class="imu-axis">Yaw</span>
+                <span class="value" id="val-yaw">—</span>
+                <span class="unit">°</span>
+            </div>
+        </div>
+    </main>
+
+    <section id="alerts">
+        <h2>Alerts</h2>
+        <ul id="alert-list"></ul>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@300;600&display=swap');
+
+:root {
+    --bg: #0d0f12;
+    --surface: #141720;
+    --border: #262c3a;
+    --accent: #00e5ff;
+    --accent-dim: #005f6b;
+    --warn: #ffb300;
+    --critical: #ff3d3d;
+    --text: #d0d8e8;
+    --text-dim: #5a6480;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-ui: 'Barlow Condensed', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    padding: 1.5rem;
+}
+
+/* Subtle scanline texture */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 999;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+h1 {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.status {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    border: 1px solid;
+}
+.status.connected    { color: var(--accent); border-color: var(--accent-dim); }
+.status.disconnected { color: var(--text-dim); border-color: var(--border); }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--accent-dim);
+    padding: 1.25rem 1.25rem 1rem;
+    position: relative;
+    transition: border-top-color 0.4s;
+}
+
+.card.alert-warn     { border-top-color: var(--warn); }
+.card.alert-critical { border-top-color: var(--critical); }
+
+.label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+}
+
+.value {
+    font-family: var(--font-mono);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: var(--accent);
+    transition: color 0.3s;
+}
+
+.unit {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+}
+
+/* Sparkline placeholder — 20 bars */
+.sparkline {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 28px;
+    margin-top: 0.75rem;
+}
+
+.sparkline .bar {
+    flex: 1;
+    background: var(--accent-dim);
+    min-height: 2px;
+    transition: height 0.3s ease, background 0.3s;
+}
+
+/* IMU card */
+.card.imu { grid-column: span 1; }
+
+.imu-row {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.imu-axis {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 38px;
+    flex-shrink: 0;
+}
+
+.imu-row .value { font-size: 1.4rem; }
+
+/* Alerts panel */
+#alerts h2 {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+}
+
+#alert-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+#alert-list li {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    padding: 0.4rem 0.75rem;
+    border-left: 3px solid var(--warn);
+    background: rgba(255,179,0,0.05);
+    color: var(--warn);
+    animation: fadeIn 0.3s ease;
+}
+
+#alert-list li.critical {
+    border-left-color: var(--critical);
+    background: rgba(255,61,61,0.05);
+    color: var(--critical);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-6px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
